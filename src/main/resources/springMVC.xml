@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+    <!-- 1. 扫描Controller,并将其生命周期纳入Spring管理 -->
+
+    <!-- context:annotation-config表示告诉Spring要用注解的方式进行配置。
+       context:annotation-config配置项作用：
+      1）隐式地向Spring容器中注册AutowiredAnnotationBeanPostProcessor、CommonAnnotationBeanPostProcessor、PersistenceAnnotationBeanPostProcessor 及 equiredAnnotationBeanPostProcessor 这 4 个 BeanPostProcessor。
+      在配置文件中使用<context:annotationconfig/>之前，必须在 <beans> 元素中声明 context 命名空间<context:component-scan/>。
+      2）是对包进行扫描，实现注释驱动Bean定义，同时将bean自动注入容器中使用。即解决了@Controller标识的类的bean的注入和使用。
+   -->
+
+    <context:annotation-config/>
+
+    <!-- context:component-scan的作用是告诉Spring，Spring能管理bean都放在com.how2java.controller这个包下
+     context:component-scan配置项不但启用了对类包进行扫描以实施注释驱动 Bean 定义的功能，同时还启用了注释驱动自动注入的功能（即还隐式地在内部注册了 AutowiredAnnotationBeanPostProcessor 和 CommonAnnotationBeanPostProcessor），
+        因此当使用 <context:component-scan/> 后，除非需要使用PersistenceAnnotationBeanPostProcessor和equiredAnnotationBeanPostProcessor两个Processor的功能（例如JPA等）否则就可以将 <context:annotation-config/> 移除了。
+     -->
+    <context:component-scan base-package="com.bank.controller">
+        <!-- 只对@Controller进行扫描就可  参考：https://www.cnblogs.com/haoke/p/4604883.html-->
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    <!-- 2. 注解驱动，以使得访问路径与方法的匹配可以通过注解配置 -->
+    <mvc:annotation-driven >
+        <!-- 消息转换器 -->
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--
+     3. 静态页面，如html,css,js,images可以访问。
+        servlet在找页面时，走的是dispatcherServlet路线。找不到的时候会报404
+         加上这个默认的servlet时候，servlet在找不到的时候会去找静态的内容。
+       如果没有试图定位， 这个标签起作用的前提就是需要我们把静态资源放在/webapp下，而非/WEB-INF下。
+     -->
+    <mvc:default-servlet-handler />
+
+    <!-- 4. 视图定位到/WEB/INF/jsp 这个目录下，如果没有试图定位到/WEB/INF/jsp文件夹，静态资源默认加载为在/webapp下的静态文件，而非/WEB-INF下。-->
+
+    <!-- 视图解析-jsp -->
+    <bean
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass"
+                  value="org.springframework.web.servlet.view.JstlView" />
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+        <property name="order" value="2" />
+    </bean>
+
+</beans>

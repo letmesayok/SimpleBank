@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bank.dao.BillMapper">
+    <insert id="save">
+        insert into bill(account, toAccount, money, time, type)
+        values (#{bill.account}, #{bill.toAccount},#{bill.money}, #{bill.time}, #{bill.type})
+    </insert>
+
+    <select id="selectList" resultType="com.bank.model.Bill">
+        select * from bill limit #{start}, #{size}
+    </select>
+
+    <select id="selectListCount" resultType="java.lang.Integer">
+        select count(1) from bill
+    </select>
+</mapper>

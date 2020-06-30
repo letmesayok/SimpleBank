@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bank.dao.AccountMapper">
+
+
+    <select id="findByAccountId" resultType="com.bank.model.Account">
+        select * from account where account = #{id}
+    </select>
+    <update id="update">
+        update account set money = #{account.money}, name=#{account.name}, password=#{account.password}, sex=#{account.sex},
+        age=#{account.age} where account = #{account.account}
+    </update>
+
+    <select id="getAccount" resultType="com.bank.model.Account">
+        select * from account where account = #{id}
+    </select>
+
+    <select id="selectList" resultType="com.bank.model.Account">
+        select * from account limit #{start}, #{size}
+    </select>
+
+    <select id="selectListCount" resultType="java.lang.Integer">
+        select count(1) from account
+    </select>
+</mapper>
