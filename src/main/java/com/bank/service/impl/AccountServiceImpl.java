@@ -82,4 +82,24 @@ public class AccountServiceImpl implements AccountService {
     public Integer selectListCount() {
         return accountMapper.selectListCount();
     }
+
+    @Override
+    public String add(Account account) {
+        Account entity = accountMapper.getAccount(account.getAccount());
+        if(entity != null) {
+            return "账户已存在，添加失败";
+        }
+        accountMapper.insert(account);
+        return "success";
+    }
+
+    @Override
+    public String edit(Account account) {
+        Account entity = accountMapper.getAccount(account.getAccount());
+        if(entity == null) {
+            return "账户不存在，修改失败";
+        }
+        accountMapper.update(account);
+        return "success";
+    }
 }

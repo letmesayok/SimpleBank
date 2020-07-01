@@ -17,4 +17,8 @@ public interface AccountService {
     List<Account> selectList(int page, int limit);
 
     Integer selectListCount();
+
+    String add(Account account);
+
+    String edit(Account account);
 }

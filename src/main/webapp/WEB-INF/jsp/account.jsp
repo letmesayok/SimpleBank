@@ -48,6 +48,7 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" id="accountId" />
     </div>
     </div>
     <%@ include file="./public/js.jsp" %>
@@ -55,7 +56,6 @@
         layui.use('table', function () {
             var table = layui.table;
 
-            //第一个实例
             table.render({
                 elem: '#list'
                 , height: 500,
@@ -72,15 +72,73 @@
                     , { field: 'money', title: '账户余额', width: 200 }
                     , { field: 'operator', title: '操作', width: 160, templet: '#update' }
                 ]],
-                toolbar: "<div><button type='button' class='layui-btn layui-btn-sm'>新增</button></div>"
+                toolbar: "<div><button id='add' type='button' class='layui-btn layui-btn-sm'>新增</button></div>",
+                id: 'accountTable'
             });
+
+            var $ = layui.$, active = {
+                reload: function () {
+                    var demoReload = $('#demoReload');
+                    //执行重载
+                    table.reload('testReload', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        , where: {
+                            key: {
+                                id: demoReload.val()
+                            }
+                        }
+                    }, 'data');
+                }
+            };
+
+
+            //监听行单击事件
+            table.on('row(test)', function (obj) {
+                console.log(obj.tr) //得到当前行元素对象
+                console.log(obj.data) //得到当前行数据
+                $("#accountId").val(obj.data.account);
+            });
+
+            $("#add").click(function () {
+                //Ajax获取
+                $.get('/account/addPage', {}, function (str) {
+                    layer.open({
+                        type: 1,
+                        area: ['800px', '550px'],
+                        content: str //注意，如果str是object，那么需要字符拼接。
+                    });
+                });
+            })
+            $("#update").click(function () {
+                var accountId = $("#accountId").val();
+                //Ajax获取
+                $.get('/account/editPage?accountId=' + accountId, {}, function (str) {
+                    layer.open({
+                        type: 1,
+                        area: ['800px', '550px'],
+                        content: str //注意，如果str是object，那么需要字符拼接。
+                    });
+                });
+            })
+            $("#delete").click(function () {
+                var accountId = $("#accountId").val();
+                layer.confirm('你确定要删除该账户吗?', { icon: 3, title: '提示' }, function (index) {
+                    layer.close(index);
+                });
+            })
+
         });
     </script>
 
     <script type="text/html" id="update">
-    <button type="button" class="layui-btn layui-btn-normal layui-btn-sm ">修改</button>
-    <button type="button" class="layui-btn layui-btn-danger layui-btn-sm ">删除</button>
+    <button type="button" id='update' class="layui-btn layui-btn-normal layui-btn-sm ">修改</button>
+    <button type="button" id='delete' class="layui-btn layui-btn-danger layui-btn-sm ">删除</button>
   </script>
+    <script>
+
+    </script>
 </body>
 
 </html>

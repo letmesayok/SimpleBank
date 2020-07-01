@@ -22,4 +22,8 @@
     <select id="selectListCount" resultType="java.lang.Integer">
         select count(1) from account
     </select>
+    <insert id="insert">
+        insert into account(account, name, password,sex,age,money)
+        values(#{account.account},#{account.name},#{account.password}, #{account.age}, #{account.money}
+    </insert>
 </mapper>

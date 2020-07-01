@@ -28,6 +28,19 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
 
+<!--  <filter>-->
+<!--    <filter-name>myFilter</filter-name>-->
+<!--    <filter-class>com.bank.config.MyFilter</filter-class>-->
+<!--  </filter>-->
+<!--  <filter-mapping>-->
+<!--    <filter-name>myFilter</filter-name>-->
+<!--    &lt;!&ndash; 拦截以下访问url &ndash;&gt;-->
+<!--    <url-pattern>/index</url-pattern>-->
+<!--    <url-pattern>/bill/*</url-pattern>-->
+<!--    <url-pattern>/user/*</url-pattern>-->
+<!--    <url-pattern>/account/*</url-pattern>-->
+<!--  </filter-mapping>-->
+
   <!--3.欢迎文件-->
   <welcome-file-list>
     <welcome-file>/WEB-INF/jsp/login.jsp</welcome-file>

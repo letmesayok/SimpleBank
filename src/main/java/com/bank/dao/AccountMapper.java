@@ -15,4 +15,6 @@ public interface AccountMapper {
     List<Account> selectList(@Param("start")int page, @Param("size")int limit);
 
     Integer selectListCount();
+
+    void insert(@Param("account") Account account);
 }

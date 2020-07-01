@@ -28,10 +28,18 @@ public class UserController {
         } else {
             User user = userService.selectByName(username);
             if(user.getPassword().equals(password)) {
+                request.getSession().setAttribute("user", user);
                 return "success";
             }
         }
         return "fail";
+    }
+
+    @PostMapping("/logout")
+    @ResponseBody
+    public String logout(HttpServletRequest request){
+        request.getSession().removeAttribute("user");
+        return "success";
     }
 
     @GetMapping("/all")

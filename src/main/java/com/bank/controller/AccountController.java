@@ -8,6 +8,7 @@ import com.bank.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -37,12 +38,18 @@ public class AccountController {
         return service.accountOut(account, money);
     }
 
+    /**
+     * 转账
+     */
     @PostMapping("/trans")
     @ResponseBody
     public String trans(String from, String to, BigDecimal money) {
         return service.trans(from, to, money);
     }
 
+    /**
+     * 获取某个账户信息
+     */
     @GetMapping("/get")
     @ResponseBody
     public Result get(String account) {
@@ -68,8 +75,34 @@ public class AccountController {
         return result;
     }
 
+    @PostMapping("/add")
+    @ResponseBody
+    public String add(Account account) {
+        return service.add(account);
+    }
+
+    @PostMapping("/edit")
+    @ResponseBody
+    public String edit(Account account) {
+        return service.edit(account);
+    }
+
     @GetMapping("/all")
     public String all(){
         return "account";
+    }
+
+    @GetMapping("/addPage")
+    public String addPage(ModelAndView model){
+        model.addObject("flag", 0);
+        return "accountAdd";
+    }
+
+    @GetMapping("/editPage")
+    public String editPage(String accountId, ModelAndView model){
+        Account account = service.getAccount(accountId);
+        model.addObject("flag", 1);
+        model.addObject("account", account);
+        return "accountAdd";
     }
 }
