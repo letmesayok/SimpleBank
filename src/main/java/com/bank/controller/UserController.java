@@ -36,10 +36,9 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    @ResponseBody
     public String logout(HttpServletRequest request){
         request.getSession().removeAttribute("user");
-        return "success";
+        return "login";
     }
 
     @GetMapping("/all")

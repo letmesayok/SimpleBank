@@ -32,7 +32,6 @@ public class MyFilter implements Filter {
             //没有登陆
             httpServletResponse.sendRedirect("/login");
         } else {
-            System.out.println("ip:" + httpServletRequest.getRemoteHost() + ",url:" + httpServletRequest.getRequestURL());
             filterChain.doFilter(servletRequest, servletResponse);
         }
 

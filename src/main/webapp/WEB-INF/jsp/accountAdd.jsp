@@ -28,7 +28,7 @@
             <label class="layui-form-label">性别</label>
             <div class="layui-input-block">
                 <input type="radio" name="sex" value="0" title="男">
-                <input type="radio" name="sex" value="1" title="女" checked>
+                <input type="radio" name="sex" value="1" title="女">
             </div>
         </div>
         <div class="layui-form-item">
@@ -78,14 +78,15 @@
 
 
             form.on('submit(form)', function (data) {
-                var value = data.field;
-                if (f == 0) {
+                const value = data.field;
+                console.log(value);
+                if (f === 0) {
                     $.ajax({
                         url: '/account/add',
                         type: 'post',
                         data: value,
                         success: function (data) {
-                            if (data == "success") {
+                            if (data === "success") {
                                 layer.open({
                                     closeBtn: 0,
                                     type: 0,

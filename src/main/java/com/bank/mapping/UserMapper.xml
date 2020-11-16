@@ -6,6 +6,6 @@
         select * from user
     </select>
     <select id="selectByName" resultType="com.bank.model.User">
-        select * from user where username = #{name}
+        select * from user where username = #{username}
     </select>
 </mapper>

@@ -8,5 +8,5 @@ import java.util.List;
 public interface UserMapper {
     List<User> all();
 
-    User selectByName(@Param("name") String username);
+    User selectByName(@Param("username") String username);
 }

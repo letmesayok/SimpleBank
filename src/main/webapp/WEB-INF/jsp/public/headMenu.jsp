@@ -8,7 +8,7 @@
         <li class="layui-nav-item">
             <a href="javascript:;">
                 <img src="${pageContext.request.contextPath }/img/head.jpg" class="layui-nav-img">
-                ${sessionScope.user.name}
+                ${sessionScope.user.username}
             </a>
             <dl class="layui-nav-child">
                 <dd><a href="">修改密码</a></dd>
